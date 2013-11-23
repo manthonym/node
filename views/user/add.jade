@@ -1,0 +1,15 @@
+extends layout
+
+block head
+
+
+block content
+  h1 Adding a user
+  p Please choose a username, a mail adress and a password
+
+  #form
+   form(action='/login')
+    input#add_username(name='username')
+    input#add_mail(name='mail', type="email")
+    input#add_password(name='password', type="password")
+    input#metric_ok(type='submit', value='Create')

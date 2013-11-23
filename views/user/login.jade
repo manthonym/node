@@ -1,0 +1,36 @@
+extends layout
+
+block head
+ 
+
+block content
+
+  :stylus
+    h1, p
+      margin 5px
+    #form, #graph
+      position relative
+      width 800px
+      margin 0 auto
+      background #CCCCCC
+      padding 10px
+      margin-bottom 20px
+    #graph
+      height 400px
+    line path
+      fill none
+      stroke #000
+      shape-rendering crispEdges
+    .area
+      fill steelblue
+
+  #welcome
+    h1 Please connect to your account before
+    p You need to connect before getting your metrics
+
+  #form
+    form(action='/login')
+      input#login_username(name='username')
+      input#login_password(name='password', type="password")
+      input#metric_ok(type='submit', value='Connexion')
+  
