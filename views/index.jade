@@ -27,7 +27,7 @@ block content
 
   #form
     h1= title
-    p Welcome to #{title}
+    p Welcome to #{title} #{name} 
     form(action='/metric')
       input#metric_id(name='metric')
       input#metric_ok(type='submit', value='OK')

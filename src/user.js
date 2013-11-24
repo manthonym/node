@@ -7,25 +7,21 @@
   module.exports = {
     log: function(login, password, callback) {
       var rs, userinfo;
-      console.log("LOG CALLED");
-      console.log(login);
-      console.log(password);
       userinfo = [];
       rs = db.createReadStream({
-        start: "user:" + login + ":",
-        end: "user:" + login + ";"
+        start: "user:" + login,
+        end: "user:" + login
       });
       rs.on('data', function(data) {
         var mailDB, passwordDB, _ref;
-        console.log("Data found");
         _ref = data.value.split(':'), mailDB = _ref[0], passwordDB = _ref[1];
-        userinfo.push({
-          login: login,
-          password: passwordDB,
-          mail: mailDB
-        });
-        console.log(login);
-        return console.log(passwordDB);
+        if (password === passwordDB) {
+          return userinfo.push({
+            login: login,
+            password: passwordDB,
+            mail: mailDB
+          });
+        }
       });
       rs.on('error', callback);
       return rs.on('close', function() {

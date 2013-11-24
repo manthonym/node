@@ -44,9 +44,12 @@ app.post '/user/create', (req, res) ->
     res.render 'user/confirm', title: 'Confirmation'
 
 app.post '/user/connect', (req, res) ->
-  user.log req.body.username, req.body.password, (err) ->
+  user.log req.body.username, req.body.password, (err, values) ->
     return next err if err
-    res.render 'index'
+    if values.length is 1
+      res.render 'index', name: values[0].login if values[0].password is req.body.password
+    else
+      res.render 'user/error'
 
 app.post '/metric/:id.json', (req, res, next) ->
   values = JSON.parse req.body
