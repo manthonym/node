@@ -8,7 +8,7 @@ block content
   p Please choose a username, a mail adress and a password
 
   #form
-   form(action='/login')
+   form(action='/user/create' method='post')
     input#add_username(name='username')
     input#add_mail(name='mail', type="email")
     input#add_password(name='password', type="password")

@@ -2,7 +2,7 @@
 http = require 'http'
 stylus = require 'stylus'
 express = require 'express'
-metrics = require './metrics'
+#metrics = require './metrics'
 user = require './user'
 
 app = express()
@@ -38,10 +38,15 @@ app.get '/login', (req, res) ->
 app.get '/user/add', (req, res) ->
   res.render 'user/add', title: 'Add a user'
 
-app.get '/user/create', (req, res) ->
+app.post '/user/create', (req, res) ->
   user.save req.body.username, req.body.mail, req.body.password, (err) ->
     return next err if err
     res.render 'user/confirm', title: 'Confirmation'
+
+app.post '/user/connect', (req, res) ->
+  user.log req.body.username, req.body.password, (err) ->
+    return next err if err
+    res.render 'index'
 
 app.post '/metric/:id.json', (req, res, next) ->
   values = JSON.parse req.body

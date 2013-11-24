@@ -29,7 +29,7 @@ block content
     p You need to connect before getting your metrics
 
   #form
-    form(action='/login')
+    form(action='/user/connect', method='post')
       input#login_username(name='username')
       input#login_password(name='password', type="password")
       input#metric_ok(type='submit', value='Connexion')
