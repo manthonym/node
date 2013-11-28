@@ -15,8 +15,20 @@ Account login is working, `http://localhost:1234/login` interface will ask for a
 
 ------------------
 
+We can add some metrics using a form, `http://localhost:1234/login`.
+
+------------------
+
+Added bootstrap CSS to make it nicer.
+
+------------------
+
 Known issues:
 The metrics module is disabled since it calls for the db module in addition to the use module. The application cannot start with this double request. 
+
+The graph is not displaying correct values.
+
+Why timestamps have 13 digits in teachers example?
 
 ------------------
 

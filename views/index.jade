@@ -1,8 +1,10 @@
 extends layout
 
 block head
-  script(src="/js/d3.js", charset="utf-8")
   script(src="/js/jquery.js", charset="utf-8")
+  link(rel='stylesheet', href='/css/bootstrap.min.css') 
+  script(src="/js/d3.js", charset="utf-8")
+  script(src="/js/bootstrap.min.js", charset="utf-8")
 
 block content
 
@@ -25,12 +27,15 @@ block content
     .area
       fill steelblue
 
+  .well
+   .center
+     h1= title
+     p Welcome back #{title} #{name} 
   #form
-    h1= title
-    p Welcome to #{title} #{name} 
-    form(action='/metric')
-      input#metric_id(name='metric')
-      input#metric_ok(type='submit', value='OK')
+    .form-group
+      form(action='/metric')
+        input#metric_id(name='metric')
+        input#metric_ok(type='submit', value='OK')
   #graph
   :coffee
     $('#metric_ok').click (e) ->

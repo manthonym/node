@@ -1,15 +1,39 @@
 extends layout
 
 block head
+  script(src="/js/bootstrap.min.js", charset="utf-8")
+  link(rel='stylesheet', href='/css/bootstrap.min.css') 
 
 
 block content
-  h1 Adding a user
-  p Please choose a username, a mail adress and a password
 
+  :stylus
+    #form
+      position relative
+      width 800px
+      padding 10px
+      margin-left 20px
+
+
+  .well
+    h1 Adding a user
+    h3 With this page, you can create a new user
+    
   #form
-   form(action='/user/create' method='post')
-    input#add_username(name='username')
-    input#add_mail(name='mail', type="email")
-    input#add_password(name='password', type="password")
-    input#metric_ok(type='submit', value='Create')
+    p Please choose a username, a mail adress and a password.
+   .form-group
+     form(action='/user/create' method='post')
+      p <b>Username: </b> 
+      input#add_username(name='username' class="form-control" placeholder="Enter username")
+      br
+
+      p <b>Email: </b> 
+      input#add_mail(name='mail', type="email" class="form-control" placeholder="Enter email")
+      br
+
+      p <b>Password: </b>
+      input#add_password(name='password', type="password" class="form-control" placeholder="Enter password")
+      br
+      br
+
+      input#metric_ok(type='submit', value='Create')

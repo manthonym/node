@@ -30,7 +30,7 @@
       metrics = [];
       rs = db.createReadStream({
         start: "metric:" + id + ":",
-        stop: "metric:" + id + ";"
+        end: "metric:" + id + ";"
       });
       rs.on('data', function(data) {
         var timestamp, _, _ref;
@@ -63,15 +63,25 @@
       ws = db.createWriteStream();
       ws.on('error', callback);
       ws.on('close', callback);
-      for (_i = 0, _len = metrics.length; _i < _len; _i++) {
-        metric = metrics[_i];
-        timestamp = metric.timestamp, value = metric.value;
+      if (metrics.length > 1) {
+        for (_i = 0, _len = metrics.length; _i < _len; _i++) {
+          metric = metrics[_i];
+          timestamp = metric.timestamp, value = metric.value;
+          ws.write({
+            key: "metric:" + id + ":" + timestamp,
+            value: value
+          });
+        }
+        return ws.end();
+      } else {
+        timestamp = metrics[0].timestamp;
+        value = metrics[0].value;
         ws.write({
           key: "metric:" + id + ":" + timestamp,
           value: value
         });
+        return ws.end();
       }
-      return ws.end();
     }
   };
 

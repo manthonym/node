@@ -1,0 +1,40 @@
+extends layout
+
+block head
+  script(src="/js/jquery.js", charset="utf-8")
+  script(src="/js/bootstrap.min.js", charset="utf-8")
+  link(rel='stylesheet', href='/css/bootstrap.min.css') 
+
+
+block content
+
+  :stylus
+    #form
+      position relative
+      width 800px
+      padding 10px
+      margin-left 20px
+
+
+  .well
+    h1 Adding a metric
+    h3 With this page, you can create a new metric
+    
+  #form
+    p Please choose an ID, a timestamp and a value.
+   .form-group
+     form(action='/data/save' method='post')
+      p <b>ID: </b> 
+      input#add_username(name='id' class="form-control" placeholder="Enter a ID")
+      br
+
+      p <b>Timestamp: </b> 
+      input#add_mail(name='timestamp', type="text" class="form-control" placeholder="Enter a timestamp")
+      br
+
+      p <b>Value: </b>
+      input#add_password(name='val', type="text" class="form-control" placeholder="Enter a value")
+      br
+      br
+
+      input#metric_ok(type='submit', value='Create')

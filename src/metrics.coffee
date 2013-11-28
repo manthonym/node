@@ -23,7 +23,7 @@ module.exports =
     metrics = []
     rs = db.createReadStream
       start: "metric:#{id}:"
-      stop: "metric:#{id};"
+      end: "metric:#{id};"
     rs.on 'data', (data) ->
       [_, id, timestamp] = data.key.split ':'
       metrics.push id: id, timestamp: parseInt(timestamp, 10), value: data.value
@@ -45,10 +45,16 @@ module.exports =
     ws = db.createWriteStream()
     ws.on 'error', callback
     ws.on 'close', callback
-    for metric in metrics
-      {timestamp, value} = metric
+    if metrics.length > 1
+      for metric in metrics
+        {timestamp, value} = metric
+        ws.write key: "metric:#{id}:#{timestamp}", value: value
+      ws.end()
+    else
+      timestamp = metrics[0].timestamp
+      value = metrics[0].value
       ws.write key: "metric:#{id}:#{timestamp}", value: value
-    ws.end()
+      ws.end()
 
 
 

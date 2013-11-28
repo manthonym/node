@@ -1,7 +1,8 @@
 extends layout
 
 block head
- 
+  script(src="/js/bootstrap.min.js", charset="utf-8")
+  link(rel='stylesheet', href='/css/bootstrap.min.css') 
 
 block content
 
@@ -24,13 +25,20 @@ block content
     .area
       fill steelblue
 
-  #welcome
+  .well
     h1 Please connect to your account before
     p You need to connect before getting your metrics
 
   #form
-    form(action='/user/connect', method='post')
-      input#login_username(name='username')
-      input#login_password(name='password', type="password")
-      input#metric_ok(type='submit', value='Connexion')
+    .form-group
+      form(action='/user/connect', method='post')
+        p <b>Username: </b>
+        input#login_username(name='username' class="form-control" placeholder="Username")
+        br
+
+        p <b>Password: </b>
+        input#login_password(name='password', type="password" class="form-control" placeholder="Password")
+
+        br
+        input#metric_ok(type='submit', value='Connexion')
   

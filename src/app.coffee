@@ -2,8 +2,8 @@
 http = require 'http'
 stylus = require 'stylus'
 express = require 'express'
-#metrics = require './metrics'
-user = require './user'
+metrics = require './metrics'
+#user = require './user'
 
 app = express()
 
@@ -50,6 +50,16 @@ app.post '/user/connect', (req, res) ->
       res.render 'index', name: values[0].login if values[0].password is req.body.password
     else
       res.render 'user/error'
+
+app.get '/data/add', (req, res) ->
+  res.render 'data/add', title: 'Add a metric'
+
+app.post '/data/save', (req, res, next) ->
+  values = []
+  values.push timestamp: req.body.timestamp, value: req.body.val
+  metrics.save req.body.id, values, (err) ->
+    return next err if err
+    res.render 'data/confirm'
 
 app.post '/metric/:id.json', (req, res, next) ->
   values = JSON.parse req.body
