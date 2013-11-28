@@ -15,7 +15,7 @@ Account login is working, `http://localhost:1234/login` interface will ask for a
 
 ------------------
 
-We can add some metrics using a form, `http://localhost:1234/login`.
+We can add some metrics using a form, `http://localhost:1234/data/add`.
 
 ------------------
 
