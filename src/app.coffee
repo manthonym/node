@@ -2,8 +2,8 @@
 http = require 'http'
 stylus = require 'stylus'
 express = require 'express'
-#metrics = require './metrics'
-user = require './user'
+metrics = require './metrics'
+#user = require './user'
 
 app = express()
 
@@ -27,6 +27,9 @@ app.get '/', (req, res) ->
   else res.render 'user/login', title: 'Login'
 
 metric_get = (req, res, next) ->
+  metrics.access req.cookies.remember, req.params.id, (err, values) ->
+    return next err if err
+    console.log values
   metrics.get req.params.id, (err, values) ->
     return next err if err
     res.json
@@ -65,11 +68,13 @@ app.get '/data/add', (req, res) ->
 
 app.get '/logout', (req, res) ->
   res.clearCookie 'remember'
-  res.render 'user/login', title: 'Login'
+  res.render 'user/logout', title: 'Logout'
 
 app.post '/data/save', (req, res, next) ->
   values = []
   values.push timestamp: req.body.timestamp, value: req.body.val
+  metrics.link req.cookies.remember, req.body.id, (err) ->
+    return next err if err
   metrics.save req.body.id, values, (err) ->
     return next err if err
     res.render 'data/confirm'

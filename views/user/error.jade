@@ -1,8 +1,15 @@
 extends layout
 
 block head
+  script(src="/js/bootstrap.min.js", charset="utf-8")
+  link(rel='stylesheet', href='/css/bootstrap.min.css') 
 
 
 block content
-  h1 Error
-  p Authentication failed! Please try again.
+  .well
+    h1 Error
+    p Authentication failed! Please try again.
+
+    a(href="http://localhost:1234/") <button type="button" class="btn btn-default">Back to safety!</button>
+
+

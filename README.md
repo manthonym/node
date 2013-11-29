@@ -27,10 +27,14 @@ Cookies are working !
 
 ------------------
 
+The username is also saved when the user created a data.
+
+------------------
+
 Known issues:
 The metrics module is disabled since it calls for the db module in addition to the use module. The application cannot start with this double request. 
 
-The graph is not displaying correct values.
+We can only get the last ID of the metrics when trying to retrieve all his metrics.
 
 Why timestamps have 13 digits in teachers example?
 

@@ -29,8 +29,13 @@ block content
 
   .well
    .center
-     h1= title
-     p Welcome back #{name} 
+     h1 Welcome back #{name} 
+     a(href="http://localhost:1234/data/add") <button type="button" class="btn btn-danger" style="align-right;"><span class="glyphicon glyphicon-off"></span> Disconnect</button>
+
+  .well
+    p Do you want to add a new metric?
+      a(href="http://localhost:1234/data/add") <button type="button" class="btn btn-success" style="align-left; margin-left: 20px">Add a metric</button>
+
   #form
     .form-group
       form(action='/metric')

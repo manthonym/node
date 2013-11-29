@@ -56,6 +56,31 @@ module.exports =
       ws.write key: "metric:#{id}:#{timestamp}", value: value
       ws.end()
 
+  link: (username, metric_id, callback) ->
+    ws = db.createWriteStream()
+    ws.on 'error', callback
+    ws.on 'close', callback
+    console.log username
+    console.log metric_id
+    ws.write key: "user_metrics:#{username}", value: "#{metric_id}"
+    console.log "data written"
+    ws.end()
+
+
+  access: (username, metric_id, callback) ->
+    list = []
+    rs = db.createReadStream
+      start: "user_metrics:#{username}"
+      end: "user_metrics:#{username};"
+    rs.on 'data', (data) ->
+      console.log data
+      #met = data.value.split ':' 
+      #list.push id: met
+      list.push data.value
+    rs.on 'error', callback    
+    rs.on 'close', ->
+      callback null, list
+
 
 
 

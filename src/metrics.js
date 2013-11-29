@@ -82,6 +82,36 @@
         });
         return ws.end();
       }
+    },
+    link: function(username, metric_id, callback) {
+      var ws;
+      ws = db.createWriteStream();
+      ws.on('error', callback);
+      ws.on('close', callback);
+      console.log(username);
+      console.log(metric_id);
+      ws.write({
+        key: "user_metrics:" + username,
+        value: "" + metric_id
+      });
+      console.log("data written");
+      return ws.end();
+    },
+    access: function(username, metric_id, callback) {
+      var list, rs;
+      list = [];
+      rs = db.createReadStream({
+        start: "user_metrics:" + username,
+        end: "user_metrics:" + username + ";"
+      });
+      rs.on('data', function(data) {
+        console.log(data);
+        return list.push(data.value);
+      });
+      rs.on('error', callback);
+      return rs.on('close', function() {
+        return callback(null, list);
+      });
     }
   };
 
