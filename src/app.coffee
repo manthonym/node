@@ -36,7 +36,9 @@ app.get '/metric/:id.json', metric_get
 app.get '/metric?metric=:id', metric_get
 
 app.get '/login', (req, res) ->
-  res.render 'user/login', title: 'Login'
+  if req.cookies.remember
+    res.render 'index', title: 'Metrics', name: req.cookies.remember
+  else res.render 'user/login', title: 'Login'
 
 app.get '/user/add', (req, res) ->
   res.render 'user/add', title: 'Add a user'
