@@ -23,6 +23,10 @@ Added bootstrap CSS to make it nicer.
 
 ------------------
 
+Cookies are working !
+
+------------------
+
 Known issues:
 The metrics module is disabled since it calls for the db module in addition to the use module. The application cannot start with this double request. 
 

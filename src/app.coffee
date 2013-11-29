@@ -2,8 +2,8 @@
 http = require 'http'
 stylus = require 'stylus'
 express = require 'express'
-metrics = require './metrics'
-#user = require './user'
+#metrics = require './metrics'
+user = require './user'
 
 app = express()
 
@@ -11,7 +11,7 @@ app.set 'views', __dirname + '/../views'
 app.set 'view engine', 'jade'
 app.use express.bodyParser()
 app.use express.methodOverride()
-app.use express.cookieParser 'your secret here'
+app.use express.cookieParser 'my secret here'
 app.use express.session()
 app.use app.router
 app.use stylus.middleware "#{__dirname}/../public"
@@ -21,7 +21,10 @@ app.use express.errorHandler
   dumpExceptions: true
 
 app.get '/', (req, res) ->
-  res.render 'index', title: 'Metrics'
+  if req.cookies.remember
+    console.log req.cookies.remember
+    res.render 'index', title: 'Metrics', name: req.cookies.remember
+  else res.render 'user/login', title: 'Login'
 
 metric_get = (req, res, next) ->
   metrics.get req.params.id, (err, values) ->
@@ -47,12 +50,20 @@ app.post '/user/connect', (req, res) ->
   user.log req.body.username, req.body.password, (err, values) ->
     return next err if err
     if values.length is 1
+      minute = 30 * 60 * 1000
+      res.cookie 'remember', req.body.username, { maxAge: minute, httpOnly: false }
+      console.log 'Cookie set'
+      console.log req.cookies.remember
       res.render 'index', name: values[0].login if values[0].password is req.body.password
     else
       res.render 'user/error'
 
 app.get '/data/add', (req, res) ->
   res.render 'data/add', title: 'Add a metric'
+
+app.get '/logout', (req, res) ->
+  res.clearCookie 'remember'
+  res.render 'user/login', title: 'Login'
 
 app.post '/data/save', (req, res, next) ->
   values = []
