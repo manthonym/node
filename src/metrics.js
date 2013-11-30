@@ -91,8 +91,8 @@
       console.log(username);
       console.log(metric_id);
       ws.write({
-        key: "user_metrics:" + username,
-        value: "" + metric_id
+        key: "user_metrics:" + metric_id,
+        value: "" + username
       });
       console.log("data written");
       return ws.end();
@@ -101,12 +101,14 @@
       var list, rs;
       list = [];
       rs = db.createReadStream({
-        start: "user_metrics:" + username,
-        end: "user_metrics:" + username + ";"
+        start: "user_metrics:" + metric_id,
+        end: "user_metrics:" + metric_id,
+        reverse: true
       });
       rs.on('data', function(data) {
-        console.log(data);
-        return list.push(data.value);
+        return list.push({
+          username: data.value
+        });
       });
       rs.on('error', callback);
       return rs.on('close', function() {

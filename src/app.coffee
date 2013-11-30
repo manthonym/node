@@ -29,12 +29,14 @@ app.get '/', (req, res) ->
 metric_get = (req, res, next) ->
   metrics.access req.cookies.remember, req.params.id, (err, values) ->
     return next err if err
-    console.log values
-  metrics.get req.params.id, (err, values) ->
-    return next err if err
-    res.json
-      id: req.params.id
-      values: values
+    if values[0].username is req.cookies.remember
+      console.log 'Authorized access'
+      metrics.get req.params.id, (err, values) ->
+        return next err if err
+        res.json
+          id: req.params.id
+          values: values
+    else console.log 'Unauthorized access'
 app.get '/metric/:id.json', metric_get
 app.get '/metric?metric=:id', metric_get
 
