@@ -7,7 +7,9 @@ Introduction
 Roadmap
 -------
 Account creation is working, just go on `http://localhost:1234/user/add`. 
-The account will be stored in the database (LevelUP) in key, value format (key is the username, value is composed of the mail adress and the password). For now, the password is stored in clear text in the database.
+The account will be stored in the database (LevelUP) in key, value format (key is the username, value is composed of the mail adress and the password). 
+
+Password is encrypted using SHA256 algorithm.
 
 ------------------
 

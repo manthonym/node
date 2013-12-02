@@ -32,6 +32,11 @@ block content
      h1 Welcome back #{name} 
      a(href="http://localhost:1234/logout") <button type="button" class="btn btn-danger" style="align-right;"><span class="glyphicon glyphicon-off"></span> Disconnect</button>
 
+  ol.breadcrumb
+    li
+      a(href='http://localhost:1234/') Home
+      li.active Display a metric
+  
   .well
     p Do you want to add a new metric?
       a(href="http://localhost:1234/data/add") <button type="button" class="btn btn-success" style="align-left; margin-left: 20px">Add a metric</button>

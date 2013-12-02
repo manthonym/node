@@ -8,7 +8,8 @@
     "stylus": "*",
     "supervisor": "*",
     "leveldown": "*",
-    "levelup": "*"
+    "levelup": "*",
+    "jshashes": "*"
   },
   "devDependencies": {
     "request": "*",

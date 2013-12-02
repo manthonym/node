@@ -29,6 +29,11 @@ block content
     h1 Please connect to your account before
     p You need to connect before getting your metrics
 
+  ol.breadcrumb
+    li
+        a(href='http://localhost:1234/') Home
+      li.active Login
+
   #form
     .form-group
       form(action='/user/connect', method='post')
@@ -41,4 +46,7 @@ block content
 
         br
         input#metric_ok(type='submit', value='Connexion')
+
+  .well
+    a(href="http://localhost:1234/user/add") Add a new user
   

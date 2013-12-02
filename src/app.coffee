@@ -2,8 +2,9 @@
 http = require 'http'
 stylus = require 'stylus'
 express = require 'express'
-metrics = require './metrics'
-#user = require './user'
+#metrics = require './metrics'
+user = require './user'
+hashes = require 'jshashes'
 
 app = express()
 
@@ -54,6 +55,7 @@ app.post '/user/create', (req, res) ->
     res.render 'user/confirm', title: 'Confirmation'
 
 app.post '/user/connect', (req, res) ->
+  sha256 = new hashes.SHA256
   user.log req.body.username, req.body.password, (err, values) ->
     return next err if err
     if values.length is 1
@@ -61,7 +63,7 @@ app.post '/user/connect', (req, res) ->
       res.cookie 'remember', req.body.username, { maxAge: minute, httpOnly: false }
       console.log 'Cookie set'
       console.log req.cookies.remember
-      res.render 'index', name: values[0].login if values[0].password is req.body.password
+      res.render 'index', name: values[0].login if values[0].password is sha256.hex(req.body.password)
     else
       res.render 'user/error'
 
