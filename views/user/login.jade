@@ -13,7 +13,6 @@ block content
       position relative
       width 800px
       margin 0 auto
-      background #CCCCCC
       padding 10px
       margin-bottom 20px
     #graph
@@ -45,8 +44,13 @@ block content
         input#login_password(name='password', type="password" class="form-control" placeholder="Password")
 
         br
-        input#metric_ok(type='submit', value='Connexion')
+        button.btn.btn-default#metric_ok(type='submit')
+          |  Connect
 
   .well
-    a(href="http://localhost:1234/user/add") Add a new user
+    p Need an account?
+        a(href='http://localhost:1234/user/add')
+          button.btn.btn-success(type='button', style='align-left;margin-left: 20px;') 
+            span.glyphicon.glyphicon-pencil
+            |  Create an account
   

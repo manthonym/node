@@ -15,7 +15,6 @@ block content
       position relative
       width 800px
       margin 0 auto
-      background #CCCCCC
       padding 10px
       margin-bottom 20px
     #graph
@@ -51,7 +50,9 @@ block content
     .form-group
       form(action='/metric')
         input#metric_id(name='metric')
-        input#metric_ok(type='submit', value='OK')
+        button.btn.btn-default#metric_ok(type='submit', value='Display', style='align-left;margin-left: 20px;')
+          span.glyphicon.glyphicon-eye-open
+          |  Display
   #graph
   :coffee
     $('#metric_ok').click (e) ->

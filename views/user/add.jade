@@ -8,12 +8,11 @@ block head
 block content
 
   :stylus
-    #form
+    #form, .form-group
       position relative
       width 800px
       padding 10px
       margin-left 20px
-
 
   .well
     h1 Adding a user
@@ -41,4 +40,6 @@ block content
       br
       br
 
-      input#metric_ok(type='submit', value='Create')
+      button.btn.btn-success#metric_ok(type='submit', value='Create', style='align-left;margin-left: 20px;')
+          span.glyphicon.glyphicon-ok
+          |  Create

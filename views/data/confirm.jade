@@ -12,11 +12,15 @@ block content
     h1 Metric added
     h3 Your metric has been added to the database.
 
-    p 
-     | Add a 
-     a(href="http://localhost:1234/data/add") new metric.
+    a(href='http://localhost:1234/data/add')
+          button.btn.btn-success(type='button', style='align-left;margin-left: 20px;') 
+            span.glyphicon.glyphicon-pencil
+            |  Add a new metric
 
-    a(href="http://localhost:1234/") Go home!
+    a(href='http://localhost:1234')
+          button.btn.btn-default(type='button', style='align-left;margin-left: 20px;') 
+            span.glyphicon.glyphicon-home
+            |  Go home
 
 
     

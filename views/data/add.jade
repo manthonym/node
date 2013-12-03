@@ -9,7 +9,7 @@ block head
 block content
 
   :stylus
-    #form
+    #form, .form-group
       position relative
       width 800px
       padding 10px
@@ -42,4 +42,6 @@ block content
       br
       br
 
-      input#metric_ok(type='submit', value='Create')
+      button.btn.btn-default#metric_ok(type='submit', value='Create', style='align-left;margin-left: 20px;')
+          span.glyphicon.glyphicon-eye-ok
+          |  Create
