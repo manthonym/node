@@ -2,9 +2,11 @@
 http = require 'http'
 stylus = require 'stylus'
 express = require 'express'
-#metrics = require './metrics'
+db = require('./db') "#{__dirname}/../db/test"
+metrics = require './metrics'
 user = require './user'
 hashes = require 'jshashes'
+
 
 app = express()
 
@@ -28,16 +30,19 @@ app.get '/', (req, res) ->
   else res.render 'user/login', title: 'Login'
 
 metric_get = (req, res, next) ->
-  metrics.access req.cookies.remember, req.params.id, (err, values) ->
+  metrics.access req.cookies.remember, req.params.id, db, (err, values) ->
     return next err if err
-    if values[0].username is req.cookies.remember
+    if values.length > 0 and values[0].success is 'true'
+      console.log values
       console.log 'Authorized access'
-      metrics.get req.params.id, (err, values) ->
+      metrics.get req.params.id, db, (err, values) ->
         return next err if err
         res.json
           id: req.params.id
           values: values
-    else console.log 'Unauthorized access'
+    else 
+      console.log 'Unauthorized access'
+      res.send(403, 'Sorry :o You cannot see that.');
 app.get '/metric/:id.json', metric_get
 app.get '/metric?metric=:id', metric_get
 
@@ -50,13 +55,13 @@ app.get '/user/add', (req, res) ->
   res.render 'user/add', title: 'Add a user'
 
 app.post '/user/create', (req, res) ->
-  user.save req.body.username, req.body.mail, req.body.password, (err) ->
+  user.save req.body.username, req.body.mail, req.body.password, db, (err) ->
     return next err if err
     res.render 'user/confirm', title: 'Confirmation'
 
 app.post '/user/connect', (req, res) ->
   sha256 = new hashes.SHA256
-  user.log req.body.username, req.body.password, (err, values) ->
+  user.log req.body.username, req.body.password, db, (err, values) ->
     return next err if err
     if values.length is 1
       minute = 30 * 60 * 1000
@@ -77,20 +82,20 @@ app.get '/logout', (req, res) ->
 app.post '/data/save', (req, res, next) ->
   values = []
   values.push timestamp: req.body.timestamp, value: req.body.val
-  metrics.link req.cookies.remember, req.body.id, (err) ->
+  metrics.link req.cookies.remember, req.body.id, db, (err) ->
     return next err if err
-  metrics.save req.body.id, values, (err) ->
+  metrics.save req.body.id, values, db, (err) ->
     return next err if err
     res.render 'data/confirm'
 
 app.post '/metric/:id.json', (req, res, next) ->
   values = JSON.parse req.body
-  metrics.save req.params.id, values, (err) ->
+  metrics.save req.params.id, values, db, (err) ->
     return next err if err
     res.json status: 'OK'
 
 app.delete '/metric/:id.json', (req, res, next) ->
-  metrics.remove req.params.id, (err) ->
+  metrics.remove req.params.id, db, (err) ->
     return next err if err
     res.json status: 'OK'
 

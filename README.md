@@ -33,12 +33,7 @@ The username is also saved when the user created a data.
 
 ------------------
 
-Known issues:
-The metrics module is disabled since it calls for the db module in addition to the use module. The application cannot start with this double request. 
-
-Function access of metrics.coffee file is not working properly, only one result is pushed into the array, instead of several... This function returns a list of username based on a metric id.
-
-Why timestamps have 13 digits in teachers example?
+Multiple users can create multiple metrics with the same ID, all of them will be able to display it.
 
 ------------------
 
