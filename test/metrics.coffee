@@ -1,5 +1,6 @@
 {exec} = require 'child_process'
 should = require 'should'
+db = require('./db') "#{__dirname}/../db/test"
 
 describe "metrics", () ->
 
@@ -14,14 +15,22 @@ describe "metrics", () ->
       timestamp:(new Date '2013-11-04 14:00 UTC').getTime(), value:123
      ,
       timestamp:(new Date '2013-11-04 14:10 UTC').getTime(), value:456
-    ], (err) ->
+    ], db, (err) ->
       return next err if err
-      metrics.get 'metric_1', (err, metrics) ->
+      metrics.get 'metric_1', db, (err, metrics) ->
         return next err if err 
         metrics.length.should.be.above 1
         [m1, m2] = metrics
         m1.timestamp.should.eql (new Date '2013-11-04 14:00 UTC').getTime()
         m1.value.should.eql 123
         m2.timestamp.should.eql m1.timestamp + 10*60*1000
+        next()
+
+  it "save a metric and access to it", (next) ->
+    metrics.link 'test', '90', db, (err) ->
+      return next err if err
+      metrics.access 'test', '90' db, (err, values) ->
+        return next err if err 
+        values.length.should.be.above 0
         next()
 

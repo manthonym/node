@@ -4,39 +4,19 @@ node_beta
 Introduction
 ------------
 
-Roadmap
--------
-Account creation is working, just go on `http://localhost:1234/user/add`. 
-The account will be stored in the database (LevelUP) in key, value format (key is the username, value is composed of the mail adress and the password). 
+The first step to use this application is account creation: just go on `http://localhost:1234/` and follow indications.
+You will be asked to choose a username, a mail adress and a password. 
+All your information will be stored in the LevelDB database (key, value format) using SHA256 encryption algorithm. 
+You will be log for 30 minutes
 
-Password is encrypted using SHA256 algorithm.
+Now you can login by going again on `http://localhost:1234/` and create your first metric, by clicking on the Add metric button.
+Again, information will be stored in the same database.
+Please use a standard timestamp format (10 digits).
 
-------------------
+Now you can display your graph.
 
-Account login is working, `http://localhost:1234/login` interface will ask for a username and a password. If the authentication passes, the user is redirected to `http://localhost:1234/index`, otherwise he is redirected to an error page `http://localhost:1234/user/error`.
-
-------------------
-
-We can add some metrics using a form, `http://localhost:1234/data/add`.
-
-------------------
-
-Added bootstrap CSS to make it nicer.
-
-------------------
-
-Cookies are working !
-
-------------------
-
-The username is also saved when the user created a data.
-
-------------------
-
-Multiple users can create multiple metrics with the same ID, all of them will be able to display it.
-
-------------------
+Note that multiple users can add different metrics with the same ID. Each of them will be able to display the graph.
 
 Licence & copyright
 ===================
-Copyright Anthony MAROIS
+Copyright BenoitJARLIER, Guillaume MAMESSIER, Anthony MAROIS.

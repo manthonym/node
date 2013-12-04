@@ -57,6 +57,7 @@ block content
   :coffee
     $('#metric_ok').click (e) ->
       e.preventDefault()
+      $( "#graph" ).empty();
       id = $('#metric_id').val()
       $.getJSON "/metric/#{id}.json", {}, (data) ->
         
